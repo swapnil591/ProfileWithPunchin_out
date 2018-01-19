@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FoxTeamAdminApp.Views.AttendanceDetailPage"
+             Title="Attendance Report"
+             >
+   
+        <StackLayout Orientation="Vertical">
+            <Frame BackgroundColor="LightGreen" HeightRequest="200" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
+                <StackLayout Orientation="Vertical" VerticalOptions="End" >
+                    <Label Text="{Binding EmpName}" FontSize="20"></Label>
+                    <Label Text="{Binding MobNo}" FontSize="20"></Label>
+                </StackLayout>
+            </Frame>
+            <StackLayout IsVisible="{Binding IsBusy}" VerticalOptions="End" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+                <Label Text="Loading" IsVisible="{Binding IsBusy}" FontSize="24" TextColor="Black" HorizontalTextAlignment="Center"/>
+                <ActivityIndicator   IsRunning="{Binding IsBusy}" WidthRequest="50" Color="Black" />
+            </StackLayout>
+            <ListView ItemsSource="{Binding AttendDetails}"
+                      HorizontalOptions="FillAndExpand"
+                      HasUnevenRows="True"
+                      Margin="0,0,0,10"
+                      >
+                <ListView.Header>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                        <Label Text="InTime" FontSize="18" TextColor="Black" HorizontalTextAlignment="Center" Margin="25,0,20,0"></Label>
+                        <Label Text="OutTime" FontSize="18" TextColor="Black" HorizontalTextAlignment="Center" Margin="25,0,20,0"></Label>
+                        <Label Text="TotalTime" FontSize="18" TextColor="Black" HorizontalTextAlignment="Center" Margin="25,0,20,0"></Label>
+                    </StackLayout>
+               </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell >
+                                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                    <Label Text="{Binding InTime}" FontSize="18" TextColor="Black" HorizontalTextAlignment="Center" Margin="20,0,20,0"></Label>
+                                    <Label Text="{Binding OutTime}" FontSize="18" TextColor="Black" HorizontalTextAlignment="Center" Margin="20,0,20,0"></Label>
+                                    <Label Text="{Binding TotalTime}" FontSize="18" TextColor="Black" HorizontalTextAlignment="Center" Margin="20,0,20,0"></Label>
+                                </StackLayout>
+                            
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer>
+                <Label Text="{Binding TotalTime}" FontSize="18"  Margin="0,0,20,0" TextColor="Black" HorizontalTextAlignment="End"/>
+                </ListView.Footer>
+            </ListView>
+            
+        </StackLayout>
+  
+</ContentPage>
