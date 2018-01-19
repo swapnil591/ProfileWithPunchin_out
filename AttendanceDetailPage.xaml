@@ -3,48 +3,97 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="FoxTeamAdminApp.Views.AttendanceDetailPage"
              Title="Attendance Report"
-             >
-   
-        <StackLayout Orientation="Vertical">
-            <Frame BackgroundColor="LightGreen" HeightRequest="200" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand">
-                <StackLayout Orientation="Vertical" VerticalOptions="End" >
-                    <Label Text="{Binding EmpName}" FontSize="20"></Label>
-                    <Label Text="{Binding MobNo}" FontSize="20"></Label>
+             NavigationPage.HasNavigationBar="False">
+
+    <StackLayout Orientation="Vertical">
+        <StackLayout  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="Center" BackgroundColor="Red" Padding="10,5,10,5" IsVisible="{Binding IsNetwork}" >
+                <Label Text="Internet Connection Not Avilable" TextColor="White" FontSize="Medium" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" />
+            </StackLayout>
+
+            <Frame VerticalOptions="FillAndExpand" CornerRadius="0" BackgroundColor="#1976D2"  HorizontalOptions="FillAndExpand"  >
+                <StackLayout Orientation="Vertical" BackgroundColor="Transparent"  VerticalOptions="FillAndExpand" >
+                    <Label  x:Name="empName" TextColor="WhiteSmoke" Text="{Binding EmpName}" HorizontalTextAlignment="Start" FontSize="24"></Label>
+                    <Label x:Name="mobNo" TextColor="WhiteSmoke" Text="{Binding MobNo}" HorizontalTextAlignment="Start" FontSize="20"></Label>
+                    <StackLayout Orientation="Horizontal" VerticalOptions="CenterAndExpand" HorizontalOptions="Fill">
+                        <Image Source="account_plus.png" IsVisible="{Binding AddContactVisibility}" HorizontalOptions="Center" VerticalOptions="Center" >
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer  Command="{Binding AddContactCommand}"  NumberOfTapsRequired="1" />
+                             </Image.GestureRecognizers>
+                        </Image>
+                        <Image Source="phone.png" HorizontalOptions="Center" VerticalOptions="Center" >
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer  Command="{Binding CallCommand}"  NumberOfTapsRequired="1" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Image Source="whatsapp.png" HorizontalOptions="Center" VerticalOptions="Center" >
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer  Command="{Binding WhatsAppCommand}"  NumberOfTapsRequired="1" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </StackLayout>
+                  
+                    <Grid HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  BackgroundColor="#1976D2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions> 
+                        <Label Text="InTime" Grid.Column="0" Grid.Row="0"  FontSize="18" TextColor="White" VerticalTextAlignment="Center" HorizontalTextAlignment="Start" Margin="0,0,0,0"></Label>
+                        <Label Text="OutTime" Grid.Column="1" Grid.Row="0"  FontSize="18" TextColor="White" VerticalTextAlignment="Center" HorizontalTextAlignment="Center" Margin="0,0,0,0"></Label>
+                        <Label Text="TotalTime" Grid.Column="2" Grid.Row="0"   FontSize="18" TextColor="White" VerticalTextAlignment="Center" HorizontalTextAlignment="End" Margin="0,0,0,0"></Label>
+                    </Grid>
+
                 </StackLayout>
             </Frame>
-            <StackLayout IsVisible="{Binding IsBusy}" VerticalOptions="End" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
-                <Label Text="Loading" IsVisible="{Binding IsBusy}" FontSize="24" TextColor="Black" HorizontalTextAlignment="Center"/>
-                <ActivityIndicator   IsRunning="{Binding IsBusy}" WidthRequest="50" Color="Black" />
-            </StackLayout>
-            <ListView ItemsSource="{Binding AttendDetails}"
+        </StackLayout>
+        <StackLayout IsVisible="{Binding IsBusy}" VerticalOptions="End" HorizontalOptions="CenterAndExpand" Orientation="Horizontal">
+            <Label Text="Loading" IsVisible="{Binding IsBusy}" FontSize="24" TextColor="Black" HorizontalTextAlignment="Center"/>
+            <ActivityIndicator   IsRunning="{Binding IsBusy}" WidthRequest="50" Color="Black" />
+        </StackLayout>
+        <ListView ItemsSource="{Binding AttendDetails}"
                       HorizontalOptions="FillAndExpand"
                       HasUnevenRows="True"
                       Margin="0,0,0,10"
                       >
-                <ListView.Header>
-                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                        <Label Text="InTime" FontSize="18" TextColor="Black" HorizontalTextAlignment="Center" Margin="25,0,20,0"></Label>
-                        <Label Text="OutTime" FontSize="18" TextColor="Black" HorizontalTextAlignment="Center" Margin="25,0,20,0"></Label>
-                        <Label Text="TotalTime" FontSize="18" TextColor="Black" HorizontalTextAlignment="Center" Margin="25,0,20,0"></Label>
-                    </StackLayout>
-               </ListView.Header>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell >
-                                <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
-                                    <Label Text="{Binding InTime}" FontSize="18" TextColor="Black" HorizontalTextAlignment="Center" Margin="20,0,20,0"></Label>
-                                    <Label Text="{Binding OutTime}" FontSize="18" TextColor="Black" HorizontalTextAlignment="Center" Margin="20,0,20,0"></Label>
-                                    <Label Text="{Binding TotalTime}" FontSize="18" TextColor="Black" HorizontalTextAlignment="Center" Margin="20,0,20,0"></Label>
-                                </StackLayout>
-                            
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                <ListView.Footer>
+            <ListView.Header>
+              
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell >
+                        <Grid HorizontalOptions="FillAndExpand">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Text="{Binding InTime}" Grid.Column="0" FontSize="18" TextColor="Black" HorizontalTextAlignment="Start" Margin="20,0,20,0"></Label>
+                            <Label Text="{Binding OutTime}" Grid.Column="1" FontSize="18" TextColor="Black" HorizontalTextAlignment="Center" Margin="20,0,20,0"></Label>
+                            <Label Text="{Binding TotalTime}" Grid.Column="2" FontSize="18" TextColor="Black" HorizontalTextAlignment="End" Margin="20,0,20,0"></Label>
+                        </Grid>
+
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.Footer>
                 <Label Text="{Binding TotalTime}" FontSize="18"  Margin="0,0,20,0" TextColor="Black" HorizontalTextAlignment="End"/>
-                </ListView.Footer>
-            </ListView>
-            
-        </StackLayout>
-  
+            </ListView.Footer>
+        </ListView>
+        <Frame  HasShadow="True"  HorizontalOptions="FillAndExpand" VerticalOptions="EndAndExpand">
+            <StackLayout Orientation="Horizontal">
+                <Button Text="Punch In" BackgroundColor="Green" Image="punchin.png" Command="{Binding PunchInCommand}"  IsVisible="{Binding InVisibility}" TextColor="White" HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                <Button Text="Punch Out" BackgroundColor="Red" Image="punchout.png" Command="{Binding PunchOutCommand}"  IsVisible="{Binding OutVisibility}" TextColor="White" HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                <Button Text="Return" BackgroundColor="Black" Image="undo.png"      Command="{Binding ReturnCommand}"  IsVisible="{Binding CloseVisibility}" TextColor="White" HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+                <Button Text="Day Close" BackgroundColor="Black" Image="dayclose.png" Command="{Binding DayCloseCommand}"  IsVisible="{Binding CloseVisibility}" TextColor="White" HorizontalOptions="FillAndExpand" VerticalOptions="Center"/>
+
+            </StackLayout>
+        </Frame>
+
+
+    </StackLayout>
+
 </ContentPage>
